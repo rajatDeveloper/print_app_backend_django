@@ -15,9 +15,10 @@ class Product(models.Model):
 class PrintCart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    isInCart = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name}"
+        return f"{self.quantity} x {self.product.name} - {self.isInCart}"
 
 # History model
 class History(models.Model):
@@ -33,14 +34,5 @@ class History(models.Model):
     def __str__(self):
         return f"Order on {self.date} - {self.get_payment_mode_display()}"
 
-    # Override save to make a copy of the print_cart for history without affecting the original cart
-    def save(self, *args, **kwargs):
-        if not self.pk:  # When creating a new history
-            super().save(*args, **kwargs)
-            # Copy the PrintCart entries to create a snapshot of the current state
-            for cart_item in self.print_cart.all():
-                cart_item.pk = None  # Set pk to None to create a new record
-                cart_item.save()
-                self.print_cart.add(cart_item)
-        else:
-            super().save(*args, **kwargs)
+    
+     
