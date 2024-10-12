@@ -19,6 +19,12 @@ class PrintCartSerializer(serializers.ModelSerializer):
         model = PrintCart
         fields = '__all__'
 
+class PrintCartDetailSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(many=False)
+    class Meta:
+        model = PrintCart
+        fields = '__all__'        
+
 
 #History Serializer 
 

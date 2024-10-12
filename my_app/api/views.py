@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status 
 
 from my_app.models import Product , History , PrintCart
-from my_app.api.serializers import ProductSerializer , HistorySerializer ,PrintCartSerializer , CreateHistorySerializer
+from my_app.api.serializers import ProductSerializer , HistorySerializer ,PrintCartSerializer , CreateHistorySerializer , PrintCartDetailSerializer
 
 
 #get All products 
@@ -52,7 +52,7 @@ class HistoryCreateView(generics.CreateAPIView):
 
 
 class PrintCartListView(generics.ListAPIView):
-    serializer_class = PrintCartSerializer
+    serializer_class = PrintCartDetailSerializer
 
     def get_queryset(self):
         # Return only PrintCart items where isInCart is True
